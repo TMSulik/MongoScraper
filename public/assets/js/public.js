@@ -1,10 +1,19 @@
 $(document).ready(function () {
-    // event handler for deleting a note
+    // event handler for deleting an article
     $(".delete-btn").click(function (event) {
         event.preventDefault();
         const id = $(this).attr("data");
-        console.log("ID TO DELETE: ", id);
         $.ajax(`/remove/${id}`, {
+            type: "PUT"
+        }).then(function(){
+            location.reload();
+        });
+    });
+
+    $(".remove-article-btn").click(function (event) {
+        event.preventDefault();
+        const id = $(this).attr("data");
+        $.ajax(`/discard/${id}`, {
             type: "PUT"
         }).then(function(){
             location.reload();
@@ -15,13 +24,11 @@ $(document).ready(function () {
     $(".note-btn").click(function (event) {
         event.preventDefault();
         const id = $(this).attr("data");
-        // const name = $(this).text();
         $('#article-id').text(id);
         $('#save-note').attr('data', id);
         $.ajax(`/articles/${id}`, {
             type: "GET"
         }).then(function (data) {
-            console.log("SAVED", data);
             $('.articles-available').empty();
             if (data[0].note.length > 0){
                 data[0].note.forEach(v => {
@@ -30,23 +37,20 @@ $(document).ready(function () {
             }
             else {
                 $('.articles-available').append($(`<li class='list-group-item'>No notes for this article yet</li>`));
-                console.log("Second ran!")
             }
         });
         $('#note-modal').modal('toggle');
     });
 
-    // $('.btn-deletenote').click(function (event) {})
-    $(document).on('click', '.btn-deletenote', function (){
-            event.preventDefault();
-            console.log($(this).attr("data"))
-            const id = $(this).attr("data");
-            console.log(id);
-            $.ajax(`/note/${id}`, {
-                type: "DELETE"
-            }).then(function () {
-                $('#note-modal').modal('toggle');
-            });
+    $(document).on('click', '.btn-deletenote', function() {
+        event.preventDefault();
+        console.log($(this).attr("data"))
+        const id = $(this).attr("data");
+        $.ajax(`/note/${id}`, {
+            type: "DELETE"
+        }).then(function () {
+            $('#note-modal').modal('toggle');
+        });
     });
 
     $("#save-note").click(function (event) {
@@ -81,6 +85,7 @@ $(document).ready(function () {
             }
         );
     });
+
     $(".save-article-btn").click(function(event) {
         event.preventDefault();
         const button = $(this);
@@ -94,9 +99,10 @@ $(document).ready(function () {
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            </div>`
+            </div>`;
             button.parent().append(alert);
             }
         );
     });
+
 });

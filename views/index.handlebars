@@ -27,13 +27,15 @@
         <div class="col-12">
             {{#if articles}}
             {{#each articles}}
+            {{#unless this.isSaved}}
+            {{#unless this.isDiscarded}}
                 <div class="card w-90">
-                    <div class="card-header">
-                        <a href={{link}} target="_blank" class="text-white row">
+                    <div class="card-header row">
+                        <a href={{link}} target="_blank" class="text-white">
                             <h3>{{title}}</h3>
-                            <button id="{{_id}}" class="btn btn-primary save-article-btn">Save</button>
-                            <button data="{{_id}}" class="btn delete-btn">Delete</button>
                         </a>
+                        <button id="{{_id}}" class="btn btn-primary save-article-btn">Save</button>
+                        <button data="{{_id}}" class="btn remove-article-btn">Discard</button>
                     </div>
                     <div class="card-body">
                         <p class="card-text">
@@ -41,6 +43,8 @@
                         </p>
                     </div>
                 </div>
+            {{/unless}}
+            {{/unless}}
             {{/each}}
             {{else}}
                 <div class="card text-white bg-warning w-90 p-1">

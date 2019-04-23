@@ -8,10 +8,10 @@ const cheerio = require("cheerio");
 router.get("/scrape", (req, res) => {
     request("https://www.nytimes.com/", (error, response, body) => {
         if (!error && response.statusCode === 200) {
-            // Then, we load that into cheerio and save it to $ for a shorthand selector
+            // Load into cheerio and save it to $ for a shorthand selector
             const $ = cheerio.load(body);
             let count = 0;
-            // Now, we grab every article:
+            // Grab every article:
             $('article a').each(function (i, element) {
                 // Save an empty result object
                 let count = i;
@@ -29,11 +29,6 @@ router.get("/scrape", (req, res) => {
                     || $(element)
                         .children('ul')
                         .text().trim();
-                console.log("TITLE: " + result.title);
-                console.log("LINK: " + result.link);
-                // https://www.nytimes.com/2019/04/22/us/politics/trump-herman-cain-federal-reserve.html
-                // /2019/04/20/us/politics/trump-putin-russia-mueller.html
-                console.log("SUMMARY: " + result.summary);
                 if (result.title && result.link && result.summary){
                     // Create a new Article using the `result` object built from scraping, but only if all three values are present
                     db.Article.create(result)
@@ -41,12 +36,12 @@ router.get("/scrape", (req, res) => {
                             count++;
                         })
                         .catch(function (err) {
-                            return res.json("SCRAPE ERROR: ", err);
+                            return res.json(err);
                         });
                 };
             });
-            // If we were able to successfully scrape and save an Article, redirect to index
-            res.redirect('/')
+            // If articles are successfully scraped and saved, redirect to the index
+            res.redirect('/');
         }
         else if (error || response.statusCode != 200){
             res.send("Error: Unable to obtain new articles")
@@ -94,6 +89,7 @@ router.get("/articles", function (req, res) {
         });
 });
 
+// Route for marking an article as saved
 router.put("/save/:id", function (req, res) {
     db.Article.findOneAndUpdate({ _id: req.params.id }, { isSaved: true })
         .then(function (data) {
@@ -101,13 +97,13 @@ router.put("/save/:id", function (req, res) {
         })
         .catch(function (err) {
             res.json(err);
-        });;
+        });
 });
 
 router.put("/remove/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { isSaved: false })
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { isSaved: false }, { isDiscarded: true })
         .then(function (data) {
-            res.json(data)
+            res.json(data);
         })
         .catch(function (err) {
             res.json(err);
@@ -134,9 +130,6 @@ router.post("/note/:id", function (req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
         .then(function (dbNote) {
-            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
             return db.Article.findOneAndUpdate({ _id: req.params.id }, {$push: { note: dbNote._id }}, { new: true });
         })
         .then(function (dbArticle) {
@@ -159,6 +152,17 @@ router.delete("/note/:id", function (req, res) {
         .catch(function (err) {
             res.json(err);
         });
+});
+
+// Route for removing an article from search results
+router.put("/discard/:id", function (req, res) {
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { isDiscarded: true })
+        .then(function (data) {
+            res.json(data);
+        })
+        .catch(function (err) {
+            res.json(err);
+        });;
 });
 
 module.exports = router;

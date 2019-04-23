@@ -22,23 +22,25 @@ var ArticleSchema = new Schema({
     unique: false
   },
 
-  byline: {
-    type: String,
-    required: false,
-    unique: false
-  },
-
   isSaved: {
     type: Boolean,
     default: false,
     required: false,
     unique: false
   },
-  // `note` is an object that stores a Note id
-  // The ref property links the ObjectId to the Note model
-  // This allows us to populate the Article with an associated Note
+
+  isDiscarded: {
+    type: Boolean,
+    default: false,
+    required: false,
+    unique: false
+  },
+
   note: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'Note'}],
+    type: [
+      { type: Schema.Types.ObjectId, 
+        ref: 'Note'}
+    ]
   }
 });
 
