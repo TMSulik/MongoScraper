@@ -6,8 +6,6 @@ const cheerio = require("cheerio");
  
 // A GET route for scraping the NYT website
 router.get("/scrape", (req, res) => {
-    console.log("scrape ran")
-    // First, we grab the body of the html with request
     request("https://www.nytimes.com/", (error, response, body) => {
         if (!error && response.statusCode === 200) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -23,7 +21,7 @@ router.get("/scrape", (req, res) => {
                 result.title = $(element)
                     .children('div')
                     .text();
-                result.link = $(element)
+                result.link = "https://www.nytimes.com"+$(element)
                     .attr("href");
                 result.summary = $(element)
                     .children('li')
@@ -33,6 +31,8 @@ router.get("/scrape", (req, res) => {
                         .text().trim();
                 console.log("TITLE: " + result.title);
                 console.log("LINK: " + result.link);
+                // https://www.nytimes.com/2019/04/22/us/politics/trump-herman-cain-federal-reserve.html
+                // /2019/04/20/us/politics/trump-putin-russia-mueller.html
                 console.log("SUMMARY: " + result.summary);
                 if (result.title && result.link && result.summary){
                     // Create a new Article using the `result` object built from scraping, but only if all three values are present
