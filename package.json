@@ -1,0 +1,29 @@
+{
+  "name": "NYT-Mongo-Scraper",
+  "version": "1.0.0",
+  "description": "A browser-based app that scrapes articles from the NY Times and allows the user to save these to a local database along with personal annotations.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmsulik/NYT-Mongo-Scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmsulik/NYT-Mongo-Scraper/issues"
+  },
+  "homepage": "https://github.com/tmsulik/NYT-Mongo-Scraper#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.14",
+    "request": "^2.85.0"
+  }
+}

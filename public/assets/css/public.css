@@ -1,0 +1,87 @@
+body {
+    background-color: #1A191A; /* thunder */
+}
+
+.jumbotron {
+    padding: 10px;
+}
+
+.background-image{
+    /* background-color: grey; */
+    background-image: url("../images/newspaper.jpg"); */
+}
+
+.sub-header {
+    text-shadow: 4px 2px white;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 2.5em;
+    /* background-color: #95A7B0; gull grey   */
+}
+ h3 {
+    font-family: "Times New Roman", Times, serif;
+ }
+.card-body {
+    background-color:#E9E9E9; /* mercury */
+}
+.w-90 {
+    background-color:#1A191A /* thunder */
+}
+.btn {
+    background-color:#95A7B0; /* gull grey */ 
+    margin-left: 20px;
+}
+/* .bg-primary {
+    background-color:pink;
+} */
+.card-header {
+    background-color: #4C5C6A; /* riverbed */
+}
+
+.alert-warning {
+    background-color: #95A7B0; /* gull grey */ 
+    color: black;
+}
+
+.modal-footer, .modal-header {
+    background-color: #4C5C6A; /* riverbed */
+    color: white;
+}
+@font-face {
+    font-family: 'Ancient';
+    src: url('../font/Ancient-Medium.ttf')  format('truetype')
+}
+
+@media (min-width: 1px) {
+    .display-1 {
+        font-size: 4rem;
+        font: 'Ancient';
+        font-family: 'Ancient';
+        color: black;
+        text-shadow: 2px 2px white;
+    }
+}
+
+@media (min-width: 576px) {
+    .display-1{
+        font-size: 5rem;
+        font: 'Ancient';
+        font-family: 'Ancient';
+        color: black;
+        text-shadow: 4px 4px white;
+    }
+    
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .display-1 {
+        font-size: 6rem;
+        color: black;
+        font: 'Ancient';
+        font-family: 'Ancient';
+        text-shadow: 2px 2px white;
+    }
+    
+}
+
+

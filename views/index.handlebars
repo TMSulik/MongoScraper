@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Mongo Scraper</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="/">Home
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-item nav-link" href="/saved">Articles</a>
+            <a href="/scrape" class="btn active text-white" role="button" aria-pressed="true">Scrape The New York Times</a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+        <div class="jumbotron text-center background-image">
+            <div class="overlay">
+                <div class="caption">
+                    <h1 class="display-1 text-black">The Mongo Times</h1>
+                    <h2 class="text-black sub-header">All the news that's fit to scrape</h2>
+                </div>
+            </div>
+        </div>
+    <div class=row>
+        <div class="col-12">
+            {{#if articles}}
+            {{#each articles}}
+                <div class="card w-90">
+                    <div class="card-header">
+                        <a href={{link}} target="_blank" class="text-white row">
+                            <h3>{{title}}</h3>
+                            <button id="{{_id}}" class="btn btn-primary save-article-btn">Save</button>
+                            <button data="{{_id}}" class="btn delete-btn">Delete</button>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{summary}}
+                        </p>
+                    </div>
+                </div>
+            {{/each}}
+            {{else}}
+                <div class="card text-white bg-warning w-90 p-1">
+                    <div class="card-body text-center">
+                        No new articles at this time
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>
