@@ -11,8 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/TMSulik/MongoScraper.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Thomas Shulich",
   "license": "ISC",
   "homepage": "https://github.com/TMSulik/MongoScraper#readme",
   "dependencies": {
@@ -23,4 +22,5 @@
     "mongoose": "^5.0.14",
     "request": "^2.85.0"
   }
+
 }
